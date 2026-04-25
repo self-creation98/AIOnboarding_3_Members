@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
 // ─── API Client Layer (maps to backend schemas.py + all routers) ───
-const API_BASE = "http://localhost:8000";
+// Backend URL - uses environment variable in production, fallback to local
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:8000";
 
 const apiClient = {
   token: null,
