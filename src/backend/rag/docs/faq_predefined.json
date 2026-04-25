@@ -1,0 +1,114 @@
+[
+  {
+    "id": "faq_leave_days",
+    "category": "leave",
+    "question": "Tôi được nghỉ bao nhiêu ngày phép trong năm?",
+    "answer": "Theo chính sách nghỉ phép của công ty:\n- Nhân viên chính thức: **12 ngày phép/năm** (tính từ ngày vào làm).\n- Nhân viên trên 5 năm: **15 ngày phép/năm**.\n- Nhân viên trên 10 năm: **18 ngày phép/năm**.\n- Phép không dùng hết được chuyển sang năm sau tối đa 5 ngày.",
+    "sources": ["doc_leave_policy"]
+  },
+  {
+    "id": "faq_leave_request",
+    "category": "leave",
+    "question": "Làm thế nào để xin nghỉ phép?",
+    "answer": "Để xin nghỉ phép, bạn cần:\n1. Gửi yêu cầu nghỉ phép cho **Manager** trước ít nhất **3 ngày làm việc**.\n2. Manager duyệt yêu cầu.\n3. Nghỉ phép nửa ngày được tính 0.5 ngày phép.\n\nNếu nghỉ không phép quá 3 ngày liên tiếp sẽ bị cảnh cáo.",
+    "sources": ["doc_leave_policy"]
+  },
+  {
+    "id": "faq_working_hours",
+    "category": "working_hours",
+    "question": "Giờ làm việc của công ty là mấy giờ?",
+    "answer": "Quy định giờ làm việc:\n- **Giờ chính**: 8:30 – 17:30, từ Thứ Hai đến Thứ Sáu.\n- **Nghỉ trưa**: 12:00 – 13:00.\n- **Flexible hours**: có thể bắt đầu từ 8:00–9:00 (kết thúc tương ứng 17:00–18:00).\n- Check-in/check-out qua hệ thống chấm công trực tuyến.",
+    "sources": ["doc_working_hours"]
+  },
+  {
+    "id": "faq_remote_work",
+    "category": "working_hours",
+    "question": "Tôi có thể làm việc từ xa không?",
+    "answer": "Có! Sau khi hoàn thành thử việc, bạn được phép **làm việc từ xa (Remote) tối đa 2 ngày/tuần**.\n\nKhi làm remote cần:\n- Sử dụng **VPN** công ty.\n- Bật **2FA** cho tất cả tài khoản công ty.",
+    "sources": ["doc_working_hours", "doc_security_policy"]
+  },
+  {
+    "id": "faq_overtime",
+    "category": "working_hours",
+    "question": "Làm thêm giờ tính lương như thế nào?",
+    "answer": "Chính sách OT (Overtime):\n- Phải được **Manager phê duyệt trước**.\n- Lương OT ngày thường: **150%** lương giờ bình thường.\n- Lương OT ngày nghỉ: **200%**.\n- Lương OT ngày lễ: **300%**.",
+    "sources": ["doc_working_hours"]
+  },
+  {
+    "id": "faq_health_insurance",
+    "category": "benefits",
+    "question": "Công ty có bảo hiểm sức khỏe không?",
+    "answer": "Có! Nhân viên chính thức được hưởng **bảo hiểm sức khỏe PVI Care** (bao gồm cả gia đình).\n\nCác phúc lợi khác:\n- Lương tháng 13 (trả tháng 1 hàng năm).\n- Thưởng hiệu suất mỗi 6 tháng.\n- Trợ cấp ăn trưa: 30.000 VND/ngày.\n- Sinh nhật: voucher 500.000 VND.",
+    "sources": ["doc_benefits"]
+  },
+  {
+    "id": "faq_13th_salary",
+    "category": "benefits",
+    "question": "Thưởng tháng 13 là gì và khi nào được nhận?",
+    "answer": "Lương tháng 13 (13th month salary) là khoản thưởng tương đương **1 tháng lương cơ bản**, được trả vào **tháng 1 hàng năm**.\n\nNgoài ra còn có thưởng hiệu suất (Performance Bonus) được review **6 tháng/lần**.",
+    "sources": ["doc_benefits"]
+  },
+  {
+    "id": "faq_it_equipment",
+    "category": "it",
+    "question": "Làm sao để xin cấp laptop hoặc thiết bị IT?",
+    "answer": "Quy trình xin cấp thiết bị IT:\n1. Tạo **ticket IT Support** qua chatbot hoặc email `it-support@company.com`.\n2. Mô tả thiết bị cần cấp.\n3. IT phản hồi trong **24h làm việc**.\n4. Thiết bị mới được cấp trong **3–5 ngày làm việc**.",
+    "sources": ["doc_it_equipment"]
+  },
+  {
+    "id": "faq_vpn_access",
+    "category": "it",
+    "question": "Làm sao để được cấp VPN?",
+    "answer": "VPN được IT cấp **trong ngày đầu tiên** làm việc.\n\nNếu cần cấp lại hoặc gặp sự cố VPN:\n- Liên hệ qua email `it-support@company.com`.\n- Hoặc tạo ticket IT Support qua chatbot.\n\nLưu ý: Bắt buộc sử dụng VPN khi **làm việc remote**.",
+    "sources": ["doc_it_equipment", "doc_security_policy"]
+  },
+  {
+    "id": "faq_github_access",
+    "category": "it",
+    "question": "Làm sao để được cấp quyền truy cập GitHub?",
+    "answer": "Để được cấp quyền GitHub / Jira / Confluence:\n1. **Manager** tạo request gửi IT.\n2. IT cấp quyền trong **24h**.\n3. Quyền database production cần approval từ **Tech Lead + CTO**.",
+    "sources": ["doc_it_equipment"]
+  },
+  {
+    "id": "faq_onboarding_week1",
+    "category": "onboarding",
+    "question": "Tuần đầu tiên làm việc tôi cần làm gì?",
+    "answer": "Tuần 1 trong quá trình Onboarding:\n- **Ngày 1**: Đón tiếp, giới thiệu văn phòng, gặp team.\n- **Ngày 2**: Đọc và ký nội quy công ty.\n- **Ngày 3**: Setup môi trường dev, 1-on-1 với Manager.\n- **Ngày 5**: Hoàn thành **Security Awareness Training**.\n\nTrước ngày đầu tiên (Pre-boarding): Nộp hồ sơ CMND/CCCD, ảnh 3x4, bằng cấp.",
+    "sources": ["doc_onboarding_process"]
+  },
+  {
+    "id": "faq_security_training",
+    "category": "compliance",
+    "question": "Security Awareness Training là gì?",
+    "answer": "Security Awareness Training là khóa đào tạo bảo mật **bắt buộc**, cần hoàn thành trong **tuần đầu làm việc**.\n\nCác quy tắc bảo mật chính:\n- Không chia sẻ mật khẩu.\n- Bật **2FA** cho mọi tài khoản công ty.\n- Báo cáo ngay email lừa đảo (phishing) cho IT Security.\n- Không cài phần mềm không được phê duyệt trên máy công ty.",
+    "sources": ["doc_security_policy", "doc_onboarding_process"]
+  },
+  {
+    "id": "faq_resignation",
+    "category": "hr",
+    "question": "Quy trình nghỉ việc như thế nào?",
+    "answer": "Quy trình nghỉ việc:\n1. Gửi đơn xin nghỉ cho Manager trước **30 ngày** (nhân viên thử việc: 3 ngày).\n2. Manager xác nhận → chuyển HR.\n3. HR lên kế hoạch bàn giao.\n4. Hoàn trả laptop, badge, thẻ ra vào.\n5. IT thu hồi email, VPN, GitHub.\n6. HR thanh toán lương cuối + phép dư + thưởng (nếu có).\n7. Cấp giấy xác nhận nghỉ việc trong **7 ngày làm việc**.",
+    "sources": ["doc_resignation"]
+  },
+  {
+    "id": "faq_performance_review",
+    "category": "hr",
+    "question": "Đánh giá hiệu suất diễn ra khi nào?",
+    "answer": "Đánh giá hiệu suất (Performance Review) diễn ra **2 lần/năm**: tháng 6 và tháng 12.\n\nQuy trình:\n1. Nhân viên tự đánh giá (Self-assessment).\n2. Manager đánh giá.\n3. 1-on-1 meeting giữa nhân viên và Manager.\n\nThang điểm: Xuất sắc (5) → Không đạt (1).\nKết quả ảnh hưởng đến thưởng, tăng lương, thăng chức.",
+    "sources": ["doc_performance_review"]
+  },
+  {
+    "id": "faq_wedding_leave",
+    "category": "leave",
+    "question": "Nghỉ cưới được mấy ngày?",
+    "answer": "Theo chế độ phúc lợi của công ty:\n- **Nghỉ cưới**: 3 ngày nghỉ hưởng lương.\n- **Nghỉ tang**: 3 ngày nghỉ hưởng lương.",
+    "sources": ["doc_benefits"]
+  },
+  {
+    "id": "faq_lunch_allowance",
+    "category": "benefits",
+    "question": "Trợ cấp ăn trưa là bao nhiêu?",
+    "answer": "Công ty hỗ trợ:\n- **Trợ cấp ăn trưa**: 30.000 VND/ngày làm việc.\n- **Trợ cấp gửi xe**: 200.000 VND/tháng.",
+    "sources": ["doc_benefits"]
+  }
+]

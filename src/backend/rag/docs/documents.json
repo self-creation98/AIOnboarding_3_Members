@@ -1,0 +1,50 @@
+[
+  {
+    "id": "doc_leave_policy",
+    "title": "Chính sách nghỉ phép năm",
+    "category": "policy",
+    "content": "Chính sách nghỉ phép năm của công ty:\n- Nhân viên chính thức: 12 ngày phép năm (tính từ ngày vào làm).\n- Nhân viên trên 5 năm: 15 ngày phép năm.\n- Nhân viên trên 10 năm: 18 ngày phép năm.\n- Nghỉ phép phải được Manager duyệt trước ít nhất 3 ngày làm việc.\n- Phép năm không sử dụng hết sẽ được chuyển sang năm sau tối đa 5 ngày.\n- Nghỉ phép nửa ngày: được phép, tính 0.5 ngày phép.\n- Nghỉ không phép quá 3 ngày liên tiếp sẽ bị cảnh cáo."
+  },
+  {
+    "id": "doc_working_hours",
+    "title": "Quy định thời gian làm việc",
+    "category": "policy",
+    "content": "Quy định thời gian làm việc:\n- Giờ làm việc chính: 8:30 - 17:30, từ thứ Hai đến thứ Sáu.\n- Nghỉ trưa: 12:00 - 13:00.\n- Flexible hours: nhân viên có thể bắt đầu từ 8:00 - 9:00 (kết thúc tương ứng 17:00 - 18:00).\n- Làm việc từ xa (Remote): tối đa 2 ngày/tuần sau khi hoàn thành thử việc.\n- Làm thêm giờ (OT): phải được Manager phê duyệt trước, tính lương 150% giờ bình thường, 200% ngày nghỉ, 300% ngày lễ.\n- Check-in/Check-out bằng hệ thống chấm công trực tuyến."
+  },
+  {
+    "id": "doc_onboarding_process",
+    "title": "Quy trình Onboarding nhân viên mới",
+    "category": "policy",
+    "content": "Quy trình Onboarding nhân viên mới:\n\nTUẦN 0 (Trước ngày làm việc đầu tiên - Pre-boarding):\n- Nộp hồ sơ: CMND/CCCD, ảnh 3x4, bằng cấp, sổ BHXH.\n- IT chuẩn bị laptop, email, tài khoản Slack/Jira/GitHub.\n- Admin chuẩn bị badge và chỗ ngồi.\n\nTUẦN 1:\n- Ngày 1: Đón tiếp, giới thiệu văn phòng, gặp team.\n- Ngày 2: Đọc và ký nội quy công ty.\n- Ngày 3: Setup môi trường dev, 1-on-1 với Manager.\n- Ngày 5: Hoàn thành Security Awareness Training.\n\nTUẦN 2:\n- Git workflow training.\n- Set mục tiêu 30-60-90 ngày với Manager.\n- Coffee chat với các team khác.\n\nTUẦN 4:\n- Review tiến độ onboarding.\n- Feedback 2 chiều giữa NV mới và Manager."
+  },
+  {
+    "id": "doc_security_policy",
+    "title": "Chính sách bảo mật thông tin",
+    "category": "compliance",
+    "content": "Chính sách bảo mật thông tin:\n- Mọi nhân viên phải hoàn thành khóa Security Awareness Training trong tuần đầu.\n- Không chia sẻ mật khẩu hoặc tài khoản với người khác.\n- Sử dụng VPN khi làm việc remote.\n- Bật 2FA (xác thực hai yếu tố) cho tất cả tài khoản công ty.\n- Không cài đặt phần mềm không được phê duyệt trên máy công ty.\n- Báo cáo ngay cho IT Security nếu phát hiện email lừa đảo (phishing).\n- Dữ liệu khách hàng là tài sản bảo mật, không được sao chép ra ngoài."
+  },
+  {
+    "id": "doc_benefits",
+    "title": "Chế độ phúc lợi nhân viên",
+    "category": "policy",
+    "content": "Chế độ phúc lợi nhân viên:\n- Bảo hiểm sức khỏe PVI Care (bản thân + gia đình) cho nhân viên chính thức.\n- 13th month salary (lương tháng 13): trả vào tháng 1 hàng năm.\n- Thưởng hiệu suất (Performance Bonus): review 6 tháng/lần.\n- Trợ cấp ăn trưa: 30,000 VND/ngày.\n- Trợ cấp gửi xe: 200,000 VND/tháng.\n- Team building: 2 lần/năm.\n- Sinh nhật: voucher 500,000 VND.\n- Nghỉ cưới: 3 ngày nghỉ hưởng lương.\n- Nghỉ tang: 3 ngày nghỉ hưởng lương."
+  },
+  {
+    "id": "doc_it_equipment",
+    "title": "Quy trình xin cấp / đổi thiết bị IT",
+    "category": "it_support",
+    "content": "Quy trình xin cấp thiết bị IT:\n1. Tạo ticket IT Support qua hệ thống chatbot hoặc email it-support@company.com.\n2. Mô tả thiết bị cần cấp (laptop, màn hình phụ, chuột, bàn phím...).\n3. IT sẽ phản hồi trong vòng 24h làm việc.\n4. Thiết bị mới sẽ được cấp trong 3-5 ngày làm việc.\n5. Thiết bị cũ/hỏng: liên hệ IT để đổi, cần trả lại thiết bị cũ.\n\nCấp quyền truy cập:\n- VPN: IT cấp trong ngày đầu tiên.\n- GitHub / Jira / Confluence: Manager tạo request, IT cấp trong 24h.\n- Quyền database production: cần approval từ Tech Lead + CTO."
+  },
+  {
+    "id": "doc_resignation",
+    "title": "Quy trình thôi việc / nghỉ việc",
+    "category": "hr",
+    "content": "Quy trình nghỉ việc:\n1. Gửi đơn xin nghỉ việc cho Manager trước 30 ngày (nhân viên thử việc: 3 ngày).\n2. Manager xác nhận và chuyển qua HR.\n3. HR lên kế hoạch bàn giao công việc.\n4. Hoàn trả thiết bị công ty (laptop, badge, thẻ ra vào).\n5. IT thu hồi tài khoản email, VPN, GitHub.\n6. HR thanh toán lương cuối, phép năm còn dư, thưởng (nếu có).\n7. Cấp giấy xác nhận nghỉ việc trong 7 ngày làm việc."
+  },
+  {
+    "id": "doc_performance_review",
+    "title": "Quy trình đánh giá hiệu suất",
+    "category": "hr",
+    "content": "Quy trình đánh giá hiệu suất (Performance Review):\n- Chu kỳ đánh giá: 6 tháng/lần (tháng 6 và tháng 12).\n- Quy trình:\n  1. Nhân viên tự đánh giá (Self-assessment).\n  2. Manager đánh giá.\n  3. 1-on-1 review meeting giữa NV và Manager.\n  4. HR ghi nhận kết quả và cập nhật hệ thống.\n- Thang điểm: Xuất sắc (5), Tốt (4), Đạt (3), Cần cải thiện (2), Không đạt (1).\n- Kết quả đánh giá ảnh hưởng đến: thưởng, tăng lương, thăng chức."
+  }
+]

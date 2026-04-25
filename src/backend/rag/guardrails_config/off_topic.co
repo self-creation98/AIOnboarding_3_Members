@@ -1,0 +1,18 @@
+define user ask off topic
+    "Thời tiết hôm nay thế nào?"
+    "Kể truyện cười đi"
+    "Tư vấn tình cảm"
+    "Hướng dẫn chơi game"
+    "Bạn có biết hát không?"
+    "Tổng thống Mỹ là ai"
+    "Làm sao để làm giàu"
+    "Thị trường chứng khoán"
+    "Công thức nấu cơm"
+    "Mã giảm giá Shopee"
+
+define bot refuse to respond off topic
+    "Xin lỗi, tôi là trợ lý AI chuyên môn của công ty. Tôi chỉ có thể hỗ trợ các vấn đề liên quan đến nội quy, nhân sự, IT và quy trình làm việc. Vui lòng đặt câu hỏi liên quan đến công ty."
+
+define flow check off_topic
+    user ask off topic
+    bot refuse to respond off topic

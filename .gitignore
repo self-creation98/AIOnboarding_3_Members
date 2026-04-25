@@ -1,0 +1,36 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+.conda/
+
+build/
+.conda/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# OS
+.DS_Store
+
+# AI logs — tracked structure, ignored content
+.ai-log/*.jsonl
+
+#my note
+lam_note.txt
+.test_chatbot.py
+
+#chromadb
+src/backend/rag/chroma_db/
+
+# Frontend — ignore node_modules & build, keep source
+src/app/demo-ui/node_modules/
+src/app/demo-ui/build/
+
+# Scratch
+scratch/

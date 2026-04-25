@@ -1,0 +1,823 @@
+INFO:     Will watch for changes in these directories: ['/home/lam/code/A20-App-090']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [15221] using WatchFiles
+INFO:     Started server process [15223]
+INFO:     Waiting for application startup.
+2026-04-23 13:36:04,838 [INFO] src.backend.main: 🚀 AI Onboarding Backend starting...
+INFO:     Application startup complete.
+2026-04-23 13:36:17,917 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/auth/v1/token?grant_type=password "HTTP/2 200 OK"
+2026-04-23 13:36:18,399 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cemail%2Cfull_name%2Cvai_tro%2Cdepartment%2Cemployee_code%2Conboarding_status&email=eq.test%40company.com&limit=1 "HTTP/2 200 OK"
+
+============================================================
+DEBUG LOGIN: email='test@company.com', password_len=6
+============================================================
+DEBUG: Email input: 'test@company.com'
+DEBUG: Domain extracted: 'company.com'
+DEBUG: ALLOWED_EMAIL_DOMAINS: ['company.com']
+DEBUG: Allowed (after strip/lower): ['company.com']
+DEBUG: Domain 'company.com' in allowed = True
+DEBUG: Calling Supabase sign_in_with_password...
+DEBUG: Supabase auth SUCCESS - user=test@company.com
+DEBUG: get_employee_by_email: 'test@company.com'
+DEBUG: Employees query result: [{'id': '25565079-a776-4f2c-9872-bb5422f1fdb8', 'email': 'test@company.com', 'full_name': 'Nguyễn Văn Test', 'vai_tro': 'nhan_vien_moi', 'department': 'Engineering', 'employee_code': 'NV001', 'onboarding_status': 'in_progress'}]
+DEBUG: Employee found: name='Nguyễn Văn Test', vai_tro='nhan_vien_moi', dept='Engineering', status='in_progress'
+INFO:     127.0.0.1:41510 - "POST /api/auth/login HTTP/1.1" 200 OK
+2026-04-23 13:36:18,612 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/auth/v1/user "HTTP/2 200 OK"
+2026-04-23 13:36:18,778 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cemail%2Cfull_name%2Cvai_tro%2Cdepartment%2Cemployee_code&email=eq.test%40company.com&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:36:19,021 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cfull_name%2Crole%2Cdepartment&id=eq.25565079-a776-4f2c-9872-bb5422f1fdb8&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:36:19,229 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_conversations?select=id%2Cmessage_count&employee_id=eq.25565079-a776-4f2c-9872-bb5422f1fdb8&ended_at=is.null&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:36:19,397 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_messages "HTTP/2 201 Created"
+2026-04-23 13:36:19,399 [INFO] src.backend.rag.graph: ---NODE: NORMALIZE INPUT---
+2026-04-23 13:36:19,399 [INFO] src.backend.rag.graph:  > Normalize took 0.0001s
+2026-04-23 13:36:19,400 [INFO] src.backend.rag.graph: ---NODE: FAQ CACHE CHECK---
+2026-04-23 13:36:19,731 [INFO] src.backend.rag.faq_cache: FAQCache ready — threshold=0.82, auto=3 entries, predefined=16 entries
+2026-04-23 13:36:20,151 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:20,155 [INFO] src.backend.rag.faq_cache: ❌ FAQ cache MISS (best_score=0.3384): 'thứ 6 tuàn này có sự kiện gì không?'
+2026-04-23 13:36:20,155 [INFO] src.backend.rag.graph:  > FAQ cache check took 0.7553s
+2026-04-23 13:36:20,156 [INFO] src.backend.rag.graph: ---NODE: LLM ROUTER---
+2026-04-23 13:36:20,156 [INFO] src.backend.rag.graph:  > Checking NeMo Guardrails...
+2026-04-23 13:36:20,156 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'UtteranceUserActionFinished', 'final_transcript': 'thứ 6 tuàn này có sự kiện gì không?'}
+2026-04-23 13:36:20,156 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: ContextUpdate {'uid': '49117995-61a9-4d3d-bae9-308e50291a39', 'event_created_at': '2026-04-23T06:36:20.156821+00:00', 'source_uid': 'NeMoGuardrails', 'data': {'user_message': 'thứ 6 tuàn này có sự kiện gì không?'}}
+2026-04-23 13:36:20,156 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': '94f35807-0075-4be8-b1a3-a0cda6a5c81e', 'event_created_at': '2026-04-23T06:36:20.156843+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'UserMessage', 'text': '$user_message'}}, 'action_result_key': None, 'action_uid': '871c07c5-be63-4afa-95ab-2cb1fbef6d23', 'is_system_action': True}
+2026-04-23 13:36:20,156 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': '94f35807-0075-4be8-b1a3-a0cda6a5c81e', 'event_created_at': '2026-04-23T06:36:20.156843+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'UserMessage', 'text': '$user_message'}}, 'action_result_key': None, 'action_uid': '871c07c5-be63-4afa-95ab-2cb1fbef6d23', 'is_system_action': True}
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: create_event
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: create_event
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': '05d7fd6b-8c95-4578-818f-dac69d476014', 'event_created_at': '2026-04-23T06:36:20.157069+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '871c07c5-be63-4afa-95ab-2cb1fbef6d23', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'UserMessage', 'text': '$user_message'}}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'UserMessage', 'uid': '914fee21-b61e-44c5-b47e-d902f456f9fd', 'event_created_at': '2026-04-23T06:36:20.157049+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'thứ 6 tuàn này có sự kiện gì không?'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:36:20.157073+00:00'}
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: UserMessage {'uid': '914fee21-b61e-44c5-b47e-d902f456f9fd', 'event_created_at': '2026-04-23T06:36:20.157049+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'thứ 6 tuàn này có sự kiện gì không?'}
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'UserMessage', 'uid': '914fee21-b61e-44c5-b47e-d902f456f9fd', 'event_created_at': '2026-04-23T06:36:20.157049+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'thứ 6 tuàn này có sự kiện gì không?'}
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': '54bb0f51-8bfe-4c31-8784-44de328fb00e', 'event_created_at': '2026-04-23T06:36:20.157369+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_user_intent', 'action_params': {}, 'action_result_key': None, 'action_uid': '2477c142-9ef1-45b0-ac70-159a12a434a1', 'is_system_action': True}
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': '54bb0f51-8bfe-4c31-8784-44de328fb00e', 'event_created_at': '2026-04-23T06:36:20.157369+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_user_intent', 'action_params': {}, 'action_result_key': None, 'action_uid': '2477c142-9ef1-45b0-ac70-159a12a434a1', 'is_system_action': True}
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: generate_user_intent
+2026-04-23 13:36:20,157 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: generate_user_intent
+2026-04-23 13:36:21,160 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:21,174 [INFO] nemoguardrails.actions.llm.generation: Phase 1 :: Generating user intent
+2026-04-23 13:36:21,756 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:22,094 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:22,102 [INFO] nemoguardrails.logging.callbacks: Invocation Params :: {'model': 'gpt-4o-mini', 'model_name': 'gpt-4o-mini', 'stream': False, 'temperature': 0.001, '_type': 'openai-chat', 'stop': None}
+2026-04-23 13:36:22,102 [INFO] nemoguardrails.logging.callbacks: Prompt Messages :: 
+[cyan]System[/]
+Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.
+Nếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."
+Nếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.
+
+[cyan]System[/]
+This is how a conversation between a user and the bot can go:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+Tell me a bit about the history of NVIDIA.
+[cyan]Bot[/]
+User intent: ask general question
+Bot intent: response for general question
+Bot message: "NVIDIA is a technology company that specializes in designing and manufacturing graphics processing units (GPUs) and other computer hardware. The company was founded in 1993 by Jen-Hsun Huang, Chris Malachowsky, and Curtis Priem."
+[cyan]User[/]
+tell me more
+[cyan]Bot[/]
+User intent: request more information
+Bot intent: provide more information
+Bot message: "Initially, the company focused on developing 3D graphics processing technology for the PC gaming market. In 1999, NVIDIA released the GeForce 256, the world's first GPU, which was a major breakthrough for the gaming industry. The company continued to innovate in the GPU space, releasing new products and expanding into other markets such as professional graphics, mobile devices, and artificial intelligence."
+[cyan]User[/]
+thanks
+[cyan]Bot[/]
+User intent: express appreciation
+Bot intent: express appreciation and offer additional help
+Bot message: "You're welcome. If you have any more questions or if there's anything else I can help you with, please don't hesitate to ask."
+[cyan]System[/]
+This is how the user talks:
+[cyan]User[/]
+Hướng dẫn chơi game
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]User[/]
+Thị trường chứng khoán
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]User[/]
+Tư vấn tình cảm
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]User[/]
+Bạn có biết hát không?
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]User[/]
+Thời tiết hôm nay thế nào?
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]System[/]
+This is the current conversation between the user and the bot:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+thứ 6 tuàn này có sự kiện gì không?
+2026-04-23 13:36:24,537 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:36:24,543 [INFO] nemoguardrails.logging.callbacks: Completion :: Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.
+2026-04-23 13:36:24,543 [INFO] nemoguardrails.logging.callbacks: Output Stats :: {'token_usage': {'completion_tokens': 20, 'prompt_tokens': 749, 'total_tokens': 769, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_baaa53d70d', 'id': 'chatcmpl-DXhxfEhxIN95uzTJxempZJTA8CwLM', 'service_tier': 'default'}
+2026-04-23 13:36:24,543 [INFO] nemoguardrails.logging.callbacks: --- :: LLM call took 2.44 seconds
+2026-04-23 13:36:24,543 [INFO] nemoguardrails.actions.llm.generation: Canonical form for user intent: Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.
+2026-04-23 13:36:24,544 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': '499a85c9-182c-4d9b-a872-b36985ffa17d', 'event_created_at': '2026-04-23T06:36:24.544034+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '2477c142-9ef1-45b0-ac70-159a12a434a1', 'action_name': 'generate_user_intent', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'UserIntent', 'uid': 'e311ef75-f3d0-4c40-a324-7d315b15f21a', 'event_created_at': '2026-04-23T06:36:24.543999+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:36:24.544041+00:00'}
+2026-04-23 13:36:24,544 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: UserIntent {'uid': 'e311ef75-f3d0-4c40-a324-7d315b15f21a', 'event_created_at': '2026-04-23T06:36:24.543999+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.'}
+2026-04-23 13:36:24,544 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'UserIntent', 'uid': 'e311ef75-f3d0-4c40-a324-7d315b15f21a', 'event_created_at': '2026-04-23T06:36:24.543999+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.'}
+2026-04-23 13:36:24,544 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': '37c64870-e05c-4317-b57b-98a32320a5d2', 'event_created_at': '2026-04-23T06:36:24.544609+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_next_steps', 'action_params': {}, 'action_result_key': None, 'action_uid': '181f183f-fea8-45c3-a4c2-2df1c906fcb8', 'is_system_action': True}
+2026-04-23 13:36:24,544 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': '37c64870-e05c-4317-b57b-98a32320a5d2', 'event_created_at': '2026-04-23T06:36:24.544609+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_next_steps', 'action_params': {}, 'action_result_key': None, 'action_uid': '181f183f-fea8-45c3-a4c2-2df1c906fcb8', 'is_system_action': True}
+2026-04-23 13:36:24,544 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: generate_next_steps
+2026-04-23 13:36:24,544 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: generate_next_steps
+2026-04-23 13:36:24,544 [INFO] nemoguardrails.actions.llm.generation: Phase 2 :: Generating next step ...
+2026-04-23 13:36:25,371 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:25,664 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:25,668 [INFO] nemoguardrails.logging.callbacks: Invocation Params :: {'model': 'gpt-4o-mini', 'model_name': 'gpt-4o-mini', 'stream': False, 'temperature': 0.001, '_type': 'openai-chat', 'stop': None}
+2026-04-23 13:36:25,668 [INFO] nemoguardrails.logging.callbacks: Prompt Messages :: 
+[cyan]System[/]
+Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.
+Nếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."
+Nếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.
+
+[cyan]System[/]
+This is how a conversation between a user and the bot can go:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+Tell me a bit about the history of NVIDIA.
+[cyan]Bot[/]
+User intent: ask general question
+Bot intent: response for general question
+Bot message: "NVIDIA is a technology company that specializes in designing and manufacturing graphics processing units (GPUs) and other computer hardware. The company was founded in 1993 by Jen-Hsun Huang, Chris Malachowsky, and Curtis Priem."
+[cyan]User[/]
+tell me more
+[cyan]Bot[/]
+User intent: request more information
+Bot intent: provide more information
+Bot message: "Initially, the company focused on developing 3D graphics processing technology for the PC gaming market. In 1999, NVIDIA released the GeForce 256, the world's first GPU, which was a major breakthrough for the gaming industry. The company continued to innovate in the GPU space, releasing new products and expanding into other markets such as professional graphics, mobile devices, and artificial intelligence."
+[cyan]User[/]
+thanks
+[cyan]Bot[/]
+User intent: express appreciation
+Bot intent: express appreciation and offer additional help
+Bot message: "You're welcome. If you have any more questions or if there's anything else I can help you with, please don't hesitate to ask."
+[cyan]System[/]
+This is how the bot thinks:
+[cyan]Bot[/]
+User intent: ask off topic
+Bot intent: refuse to respond off topic
+[cyan]System[/]
+This is the current conversation between the user and the bot:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+thứ 6 tuàn này có sự kiện gì không?
+[cyan]Bot[/]
+User intent: Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.
+2026-04-23 13:36:26,957 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:36:26,958 [INFO] nemoguardrails.logging.callbacks: Completion :: Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.
+2026-04-23 13:36:26,958 [INFO] nemoguardrails.logging.callbacks: Output Stats :: {'token_usage': {'completion_tokens': 20, 'prompt_tokens': 695, 'total_tokens': 715, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_a7190374f3', 'id': 'chatcmpl-DXhxi0IEzM5e5M97TFo96LXyvdiLQ', 'service_tier': 'default'}
+2026-04-23 13:36:26,958 [INFO] nemoguardrails.logging.callbacks: --- :: LLM call took 1.29 seconds
+2026-04-23 13:36:26,959 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': '1debc35d-634f-4ffe-beb0-f24e763d45d2', 'event_created_at': '2026-04-23T06:36:26.959107+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '181f183f-fea8-45c3-a4c2-2df1c906fcb8', 'action_name': 'generate_next_steps', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'BotIntent', 'uid': '42931ef2-42ad-43ad-87c1-4d3906da47f9', 'event_created_at': '2026-04-23T06:36:26.959058+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'general response'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:36:26.959116+00:00'}
+2026-04-23 13:36:26,959 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: BotIntent {'uid': '42931ef2-42ad-43ad-87c1-4d3906da47f9', 'event_created_at': '2026-04-23T06:36:26.959058+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'general response'}
+2026-04-23 13:36:26,959 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'BotIntent', 'uid': '42931ef2-42ad-43ad-87c1-4d3906da47f9', 'event_created_at': '2026-04-23T06:36:26.959058+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'general response'}
+2026-04-23 13:36:26,959 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': '6facffec-9b62-4671-abc9-f173685daf1c', 'event_created_at': '2026-04-23T06:36:26.959909+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'retrieve_relevant_chunks', 'action_params': {}, 'action_result_key': None, 'action_uid': '132b687e-21b9-44ba-b20c-052ec6a3b1d0', 'is_system_action': True}
+2026-04-23 13:36:26,960 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': '6facffec-9b62-4671-abc9-f173685daf1c', 'event_created_at': '2026-04-23T06:36:26.959909+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'retrieve_relevant_chunks', 'action_params': {}, 'action_result_key': None, 'action_uid': '132b687e-21b9-44ba-b20c-052ec6a3b1d0', 'is_system_action': True}
+2026-04-23 13:36:26,960 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: retrieve_relevant_chunks
+2026-04-23 13:36:26,960 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: retrieve_relevant_chunks
+2026-04-23 13:36:26,960 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: ContextUpdate {'uid': '56714c7a-b5e6-4a52-9cc3-9da040545eaa', 'event_created_at': '2026-04-23T06:36:26.960202+00:00', 'source_uid': 'NeMoGuardrails', 'data': {'relevant_chunks': '\n', 'relevant_chunks_sep': [], 'retrieved_for': None}}
+2026-04-23 13:36:26,960 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': '41e0d439-9a4c-438c-8270-68742eb0c029', 'event_created_at': '2026-04-23T06:36:26.960222+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '132b687e-21b9-44ba-b20c-052ec6a3b1d0', 'action_name': 'retrieve_relevant_chunks', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': '\n', 'events': None, 'is_system_action': True, 'action_finished_at': '2026-04-23T06:36:26.960231+00:00'}
+2026-04-23 13:36:26,960 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'InternalSystemActionFinished', 'uid': '41e0d439-9a4c-438c-8270-68742eb0c029', 'event_created_at': '2026-04-23T06:36:26.960222+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '132b687e-21b9-44ba-b20c-052ec6a3b1d0', 'action_name': 'retrieve_relevant_chunks', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': '\n', 'events': None, 'is_system_action': True, 'action_finished_at': '2026-04-23T06:36:26.960231+00:00'}
+2026-04-23 13:36:26,960 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': 'a30164b7-38c6-40f3-9845-115bbdcd63ac', 'event_created_at': '2026-04-23T06:36:26.960862+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_bot_message', 'action_params': {}, 'action_result_key': None, 'action_uid': 'cfaaa2f4-f418-45f6-98f3-c91edc139f7e', 'is_system_action': True}
+2026-04-23 13:36:26,960 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': 'a30164b7-38c6-40f3-9845-115bbdcd63ac', 'event_created_at': '2026-04-23T06:36:26.960862+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_bot_message', 'action_params': {}, 'action_result_key': None, 'action_uid': 'cfaaa2f4-f418-45f6-98f3-c91edc139f7e', 'is_system_action': True}
+2026-04-23 13:36:26,961 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: generate_bot_message
+2026-04-23 13:36:26,961 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: generate_bot_message
+2026-04-23 13:36:26,961 [INFO] nemoguardrails.actions.llm.generation: Phase 3 :: Generating bot message ...
+2026-04-23 13:36:27,318 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:27,521 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:27,527 [INFO] nemoguardrails.logging.callbacks: Invocation Params :: {'model': 'gpt-4o-mini', 'model_name': 'gpt-4o-mini', 'stream': False, 'temperature': 0.0, '_type': 'openai-chat', 'stop': None}
+2026-04-23 13:36:27,527 [INFO] nemoguardrails.logging.callbacks: Prompt Messages :: 
+[cyan]System[/]
+Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.
+Nếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."
+Nếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.
+
+[cyan]System[/]
+This is how a conversation between a user and the bot can go:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+Tell me a bit about the history of NVIDIA.
+[cyan]Bot[/]
+User intent: ask general question
+Bot intent: response for general question
+Bot message: "NVIDIA is a technology company that specializes in designing and manufacturing graphics processing units (GPUs) and other computer hardware. The company was founded in 1993 by Jen-Hsun Huang, Chris Malachowsky, and Curtis Priem."
+[cyan]User[/]
+tell me more
+[cyan]Bot[/]
+User intent: request more information
+Bot intent: provide more information
+Bot message: "Initially, the company focused on developing 3D graphics processing technology for the PC gaming market. In 1999, NVIDIA released the GeForce 256, the world's first GPU, which was a major breakthrough for the gaming industry. The company continued to innovate in the GPU space, releasing new products and expanding into other markets such as professional graphics, mobile devices, and artificial intelligence."
+[cyan]User[/]
+thanks
+[cyan]Bot[/]
+User intent: express appreciation
+Bot intent: express appreciation and offer additional help
+Bot message: "You're welcome. If you have any more questions or if there's anything else I can help you with, please don't hesitate to ask."
+[cyan]System[/]
+"
+[cyan]System[/]
+This is how the bot talks:
+[cyan]Bot[/]
+Bot intent: say
+Bot message: "I'm sorry, the desired output triggered rule(s) designed to mitigate exploitation of {{ response.detections | join(join_separator) }}."
+[cyan]Bot[/]
+Bot intent: inform answer unknown
+Bot message: "I don't know the answer to that."
+[cyan]Bot[/]
+Bot intent: response untrustworthy
+Bot message: "$bot_message \nCAUTION: THIS ANSWER HAS BEEN FLAGGED AS POTENTIALLY UNTRUSTWORTHY"
+[cyan]Bot[/]
+Bot intent: refuse to respond off topic
+Bot message: "Xin lỗi, tôi là trợ lý AI chuyên môn của công ty. Tôi chỉ có thể hỗ trợ các vấn đề liên quan đến nội quy, nhân sự, IT và quy trình làm việc. Vui lòng đặt câu hỏi liên quan đến công ty."
+[cyan]Bot[/]
+Bot intent: refuse to respond
+Bot message: "I'm sorry, I can't respond to that."
+[cyan]System[/]
+This is the current conversation between the user and the bot:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+thứ 6 tuàn này có sự kiện gì không?
+[cyan]Bot[/]
+User intent: Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.
+Bot intent: general response
+2026-04-23 13:36:28,750 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.logging.callbacks: Completion :: Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.logging.callbacks: Output Stats :: {'token_usage': {'completion_tokens': 20, 'prompt_tokens': 883, 'total_tokens': 903, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_a7190374f3', 'id': 'chatcmpl-DXhxkV5jum7cx8Hfph56d3ZB1JbyM', 'service_tier': 'default'}
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.logging.callbacks: --- :: LLM call took 1.22 seconds
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.actions.llm.generation: --- :: LLM Bot Message Generation call took 1.23 seconds
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.actions.llm.generation: Generated bot message: Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: ContextUpdate {'uid': 'f35357fb-a7fe-4283-af97-1c4e8b791bda', 'event_created_at': '2026-04-23T06:36:28.752404+00:00', 'source_uid': 'NeMoGuardrails', 'data': {'_last_bot_prompt': [{'type': 'system', 'content': 'Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.\nNếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."\nNếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.\n'}, {'type': 'system', 'content': 'This is how a conversation between a user and the bot can go:'}, {'type': 'user', 'content': 'Hello there!'}, {'type': 'assistant', 'content': 'User intent: express greeting\nBot intent: express greeting\nBot message: "Hello! How can I assist you today?"'}, {'type': 'user', 'content': 'What can you do for me?'}, {'type': 'assistant', 'content': 'User intent: ask about capabilities\nBot intent: respond about capabilities\nBot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."'}, {'type': 'user', 'content': 'Tell me a bit about the history of NVIDIA.'}, {'type': 'assistant', 'content': 'User intent: ask general question\nBot intent: response for general question\nBot message: "NVIDIA is a technology company that specializes in designing and manufacturing graphics processing units (GPUs) and other computer hardware. The company was founded in 1993 by Jen-Hsun Huang, Chris Malachowsky, and Curtis Priem."'}, {'type': 'user', 'content': 'tell me more'}, {'type': 'assistant', 'content': 'User intent: request more information\nBot intent: provide more information\nBot message: "Initially, the company focused on developing 3D graphics processing technology for the PC gaming market. In 1999, NVIDIA released the GeForce 256, the world\'s first GPU, which was a major breakthrough for the gaming industry. The company continued to innovate in the GPU space, releasing new products and expanding into other markets such as professional graphics, mobile devices, and artificial intelligence."'}, {'type': 'user', 'content': 'thanks'}, {'type': 'assistant', 'content': 'User intent: express appreciation\nBot intent: express appreciation and offer additional help\nBot message: "You\'re welcome. If you have any more questions or if there\'s anything else I can help you with, please don\'t hesitate to ask."'}, {'type': 'system', 'content': '"'}, {'type': 'system', 'content': 'This is how the bot talks:'}, {'type': 'assistant', 'content': 'Bot intent: say\nBot message: "I\'m sorry, the desired output triggered rule(s) designed to mitigate exploitation of {{ response.detections | join(join_separator) }}."'}, {'type': 'assistant', 'content': 'Bot intent: inform answer unknown\nBot message: "I don\'t know the answer to that."'}, {'type': 'assistant', 'content': 'Bot intent: response untrustworthy\nBot message: "$bot_message \\nCAUTION: THIS ANSWER HAS BEEN FLAGGED AS POTENTIALLY UNTRUSTWORTHY"'}, {'type': 'assistant', 'content': 'Bot intent: refuse to respond off topic\nBot message: "Xin lỗi, tôi là trợ lý AI chuyên môn của công ty. Tôi chỉ có thể hỗ trợ các vấn đề liên quan đến nội quy, nhân sự, IT và quy trình làm việc. Vui lòng đặt câu hỏi liên quan đến công ty."'}, {'type': 'assistant', 'content': 'Bot intent: refuse to respond\nBot message: "I\'m sorry, I can\'t respond to that."'}, {'type': 'system', 'content': 'This is the current conversation between the user and the bot:'}, {'type': 'user', 'content': 'Hello there!'}, {'type': 'assistant', 'content': 'User intent: express greeting\nBot intent: express greeting\nBot message: "Hello! How can I assist you today?"'}, {'type': 'user', 'content': 'What can you do for me?'}, {'type': 'bot', 'content': 'User intent: ask about capabilities\nBot intent: respond about capabilities\nBot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."'}, {'type': 'user', 'content': 'thứ 6 tuàn này có sự kiện gì không?'}, {'type': 'assistant', 'content': 'User intent: Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.\nBot intent: general response'}]}}
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': '4bf150c3-3c9d-4766-829a-e2af14d02dcd', 'event_created_at': '2026-04-23T06:36:28.752413+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': 'cfaaa2f4-f418-45f6-98f3-c91edc139f7e', 'action_name': 'generate_bot_message', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'BotMessage', 'uid': '30aa6ff2-293a-466f-9f2f-9952eda8688a', 'event_created_at': '2026-04-23T06:36:28.752377+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:36:28.752418+00:00'}
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: BotMessage {'uid': '30aa6ff2-293a-466f-9f2f-9952eda8688a', 'event_created_at': '2026-04-23T06:36:28.752377+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.'}
+2026-04-23 13:36:28,752 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'BotMessage', 'uid': '30aa6ff2-293a-466f-9f2f-9952eda8688a', 'event_created_at': '2026-04-23T06:36:28.752377+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.'}
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: ContextUpdate {'uid': '19669452-9192-4b23-a7ee-aabf68face4a', 'event_created_at': '2026-04-23T06:36:28.753037+00:00', 'source_uid': 'NeMoGuardrails', 'data': {'bot_message': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.'}}
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': '6ee4005c-caf7-4e8e-84e1-967b4c01e7d1', 'event_created_at': '2026-04-23T06:36:28.753049+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'StartUtteranceBotAction', 'script': '$bot_message'}}, 'action_result_key': None, 'action_uid': '5484bf24-808b-4665-96c6-3d89f0c9c76f', 'is_system_action': True}
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': '6ee4005c-caf7-4e8e-84e1-967b4c01e7d1', 'event_created_at': '2026-04-23T06:36:28.753049+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'StartUtteranceBotAction', 'script': '$bot_message'}}, 'action_result_key': None, 'action_uid': '5484bf24-808b-4665-96c6-3d89f0c9c76f', 'is_system_action': True}
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: create_event
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: create_event
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': '1060a153-a3d4-4dd3-b538-24f9b169b2fe', 'event_created_at': '2026-04-23T06:36:28.753228+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '5484bf24-808b-4665-96c6-3d89f0c9c76f', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'StartUtteranceBotAction', 'script': '$bot_message'}}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'StartUtteranceBotAction', 'uid': 'b7613823-68b7-4ed4-be93-0abf682d2979', 'event_created_at': '2026-04-23T06:36:28.753206+00:00', 'source_uid': 'NeMoGuardrails', 'script': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.', 'action_info_modality': 'bot_speech', 'action_info_modality_policy': 'replace', 'action_uid': 'c4186318-a82e-4e4a-a584-8ab163570ba6'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:36:28.753231+00:00'}
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartUtteranceBotAction {'uid': 'b7613823-68b7-4ed4-be93-0abf682d2979', 'event_created_at': '2026-04-23T06:36:28.753206+00:00', 'source_uid': 'NeMoGuardrails', 'script': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.', 'action_info_modality': 'bot_speech', 'action_info_modality_policy': 'replace', 'action_uid': 'c4186318-a82e-4e4a-a584-8ab163570ba6'}
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartUtteranceBotAction', 'uid': 'b7613823-68b7-4ed4-be93-0abf682d2979', 'event_created_at': '2026-04-23T06:36:28.753206+00:00', 'source_uid': 'NeMoGuardrails', 'script': 'Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ.', 'action_info_modality': 'bot_speech', 'action_info_modality_policy': 'replace', 'action_uid': 'c4186318-a82e-4e4a-a584-8ab163570ba6'}
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: Listen {'uid': '069a9e3c-59eb-4ede-9191-cdd083630730', 'event_created_at': '2026-04-23T06:36:28.753720+00:00', 'source_uid': 'NeMoGuardrails'}
+2026-04-23 13:36:28,753 [INFO] nemoguardrails.rails.llm.llmrails: --- :: Total processing took 8.60 seconds. Stats: 3 total calls, 4.96 total time, 2387 total tokens, 2327 total prompt tokens, 60 total completion tokens, [2.44, 1.29, 1.22] as latencies
+2026-04-23 13:36:28,753 [INFO] src.backend.rag.graph:  > Guardrails: off_topic
+2026-04-23 13:36:28,754 [INFO] src.backend.api.chat: Chatbot Graph execution took 9.3564s
+2026-04-23 13:36:29,262 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_messages "HTTP/2 201 Created"
+2026-04-23 13:36:29,427 [INFO] httpx: HTTP Request: PATCH https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_conversations?id=eq.da07a461-3fad-4966-917f-5db7ada7c556 "HTTP/2 200 OK"
+INFO:     127.0.0.1:41522 - "POST /api/chat HTTP/1.1" 201 Created
+WARNING:  WatchFiles detected changes in 'test_chatbot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-04-23 13:36:43,858 [INFO] src.backend.main: 👋 AI Onboarding Backend shutting down...
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15223]
+INFO:     Started server process [15422]
+INFO:     Waiting for application startup.
+2026-04-23 13:36:50,356 [INFO] src.backend.main: 🚀 AI Onboarding Backend starting...
+INFO:     Application startup complete.
+2026-04-23 13:36:50,725 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/auth/v1/token?grant_type=password "HTTP/2 200 OK"
+2026-04-23 13:36:51,273 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cemail%2Cfull_name%2Cvai_tro%2Cdepartment%2Cemployee_code%2Conboarding_status&email=eq.test%40company.com&limit=1 "HTTP/2 200 OK"
+
+============================================================
+DEBUG LOGIN: email='test@company.com', password_len=6
+============================================================
+DEBUG: Email input: 'test@company.com'
+DEBUG: Domain extracted: 'company.com'
+DEBUG: ALLOWED_EMAIL_DOMAINS: ['company.com']
+DEBUG: Allowed (after strip/lower): ['company.com']
+DEBUG: Domain 'company.com' in allowed = True
+DEBUG: Calling Supabase sign_in_with_password...
+DEBUG: Supabase auth SUCCESS - user=test@company.com
+DEBUG: get_employee_by_email: 'test@company.com'
+DEBUG: Employees query result: [{'id': '25565079-a776-4f2c-9872-bb5422f1fdb8', 'email': 'test@company.com', 'full_name': 'Nguyễn Văn Test', 'vai_tro': 'nhan_vien_moi', 'department': 'Engineering', 'employee_code': 'NV001', 'onboarding_status': 'in_progress'}]
+DEBUG: Employee found: name='Nguyễn Văn Test', vai_tro='nhan_vien_moi', dept='Engineering', status='in_progress'
+INFO:     127.0.0.1:53230 - "POST /api/auth/login HTTP/1.1" 200 OK
+2026-04-23 13:36:51,485 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/auth/v1/user "HTTP/2 200 OK"
+2026-04-23 13:36:51,675 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cemail%2Cfull_name%2Cvai_tro%2Cdepartment%2Cemployee_code&email=eq.test%40company.com&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:36:51,896 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cfull_name%2Crole%2Cdepartment&id=eq.25565079-a776-4f2c-9872-bb5422f1fdb8&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:36:52,099 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_conversations?select=id%2Cmessage_count&employee_id=eq.25565079-a776-4f2c-9872-bb5422f1fdb8&ended_at=is.null&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:36:52,304 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_messages "HTTP/2 201 Created"
+2026-04-23 13:36:52,306 [INFO] src.backend.rag.graph: ---NODE: NORMALIZE INPUT---
+2026-04-23 13:36:52,307 [INFO] src.backend.rag.graph:  > Normalize took 0.0001s
+2026-04-23 13:36:52,307 [INFO] src.backend.rag.graph: ---NODE: FAQ CACHE CHECK---
+2026-04-23 13:36:52,630 [INFO] src.backend.rag.faq_cache: FAQCache ready — threshold=0.82, auto=3 entries, predefined=16 entries
+2026-04-23 13:36:53,428 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:36:53,434 [INFO] src.backend.rag.faq_cache: ✅ FAQ cache HIT (score=0.9546): 'Nghỉ thai sản là gì?'
+2026-04-23 13:36:53,434 [INFO] src.backend.rag.graph:  > Cache HIT — skipping full pipeline (took 1.1270s).
+2026-04-23 13:36:53,435 [INFO] src.backend.api.chat: Chatbot Graph execution took 1.1305s
+2026-04-23 13:36:53,635 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_messages "HTTP/2 201 Created"
+2026-04-23 13:36:53,944 [INFO] httpx: HTTP Request: PATCH https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_conversations?id=eq.da07a461-3fad-4966-917f-5db7ada7c556 "HTTP/2 200 OK"
+INFO:     127.0.0.1:44200 - "POST /api/chat HTTP/1.1" 201 Created
+WARNING:  WatchFiles detected changes in 'test_chatbot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-04-23 13:37:36,928 [INFO] src.backend.main: 👋 AI Onboarding Backend shutting down...
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15422]
+INFO:     Started server process [15562]
+INFO:     Waiting for application startup.
+2026-04-23 13:37:41,784 [INFO] src.backend.main: 🚀 AI Onboarding Backend starting...
+INFO:     Application startup complete.
+2026-04-23 13:37:42,487 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/auth/v1/token?grant_type=password "HTTP/2 200 OK"
+2026-04-23 13:37:43,507 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cemail%2Cfull_name%2Cvai_tro%2Cdepartment%2Cemployee_code%2Conboarding_status&email=eq.test%40company.com&limit=1 "HTTP/2 200 OK"
+
+============================================================
+DEBUG LOGIN: email='test@company.com', password_len=6
+============================================================
+DEBUG: Email input: 'test@company.com'
+DEBUG: Domain extracted: 'company.com'
+DEBUG: ALLOWED_EMAIL_DOMAINS: ['company.com']
+DEBUG: Allowed (after strip/lower): ['company.com']
+DEBUG: Domain 'company.com' in allowed = True
+DEBUG: Calling Supabase sign_in_with_password...
+DEBUG: Supabase auth SUCCESS - user=test@company.com
+DEBUG: get_employee_by_email: 'test@company.com'
+DEBUG: Employees query result: [{'id': '25565079-a776-4f2c-9872-bb5422f1fdb8', 'email': 'test@company.com', 'full_name': 'Nguyễn Văn Test', 'vai_tro': 'nhan_vien_moi', 'department': 'Engineering', 'employee_code': 'NV001', 'onboarding_status': 'in_progress'}]
+DEBUG: Employee found: name='Nguyễn Văn Test', vai_tro='nhan_vien_moi', dept='Engineering', status='in_progress'
+INFO:     127.0.0.1:53620 - "POST /api/auth/login HTTP/1.1" 200 OK
+2026-04-23 13:37:43,711 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/auth/v1/user "HTTP/2 200 OK"
+2026-04-23 13:37:43,919 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cemail%2Cfull_name%2Cvai_tro%2Cdepartment%2Cemployee_code&email=eq.test%40company.com&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:37:44,124 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cfull_name%2Crole%2Cdepartment&id=eq.25565079-a776-4f2c-9872-bb5422f1fdb8&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:37:44,325 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_conversations?select=id%2Cmessage_count&employee_id=eq.25565079-a776-4f2c-9872-bb5422f1fdb8&ended_at=is.null&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:37:44,636 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_messages "HTTP/2 201 Created"
+2026-04-23 13:37:44,639 [INFO] src.backend.rag.graph: ---NODE: NORMALIZE INPUT---
+2026-04-23 13:37:44,640 [INFO] src.backend.rag.graph:  > Normalize took 0.0001s
+2026-04-23 13:37:44,640 [INFO] src.backend.rag.graph: ---NODE: FAQ CACHE CHECK---
+2026-04-23 13:37:45,001 [INFO] src.backend.rag.faq_cache: FAQCache ready — threshold=0.82, auto=3 entries, predefined=16 entries
+2026-04-23 13:37:45,865 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:45,873 [INFO] src.backend.rag.faq_cache: ❌ FAQ cache MISS (best_score=0.7336): 'thời gian nghỉ phép là bao lâu và được tính như thế nào?'
+2026-04-23 13:37:45,873 [INFO] src.backend.rag.graph:  > FAQ cache check took 1.2329s
+2026-04-23 13:37:45,874 [INFO] src.backend.rag.graph: ---NODE: LLM ROUTER---
+2026-04-23 13:37:45,874 [INFO] src.backend.rag.graph:  > Checking NeMo Guardrails...
+2026-04-23 13:37:45,874 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'UtteranceUserActionFinished', 'final_transcript': 'thời gian nghỉ phép là bao lâu và được tính như thế nào?'}
+2026-04-23 13:37:45,874 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: ContextUpdate {'uid': '7bb6bda4-4821-451e-87a2-3228f53397a2', 'event_created_at': '2026-04-23T06:37:45.874855+00:00', 'source_uid': 'NeMoGuardrails', 'data': {'user_message': 'thời gian nghỉ phép là bao lâu và được tính như thế nào?'}}
+2026-04-23 13:37:45,874 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': '4258b83c-f2f2-4e42-89e5-3a887c6ea4f6', 'event_created_at': '2026-04-23T06:37:45.874879+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'UserMessage', 'text': '$user_message'}}, 'action_result_key': None, 'action_uid': '555105c6-eb22-4ba7-9ac4-94da7832db2f', 'is_system_action': True}
+2026-04-23 13:37:45,874 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': '4258b83c-f2f2-4e42-89e5-3a887c6ea4f6', 'event_created_at': '2026-04-23T06:37:45.874879+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'UserMessage', 'text': '$user_message'}}, 'action_result_key': None, 'action_uid': '555105c6-eb22-4ba7-9ac4-94da7832db2f', 'is_system_action': True}
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: create_event
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: create_event
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': '307f8f91-0ef2-4296-b1e9-b0c9f31c15fd', 'event_created_at': '2026-04-23T06:37:45.875117+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '555105c6-eb22-4ba7-9ac4-94da7832db2f', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'UserMessage', 'text': '$user_message'}}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'UserMessage', 'uid': '909dc472-e045-4d8c-b881-4a5781d23c7b', 'event_created_at': '2026-04-23T06:37:45.875095+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'thời gian nghỉ phép là bao lâu và được tính như thế nào?'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:37:45.875124+00:00'}
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: UserMessage {'uid': '909dc472-e045-4d8c-b881-4a5781d23c7b', 'event_created_at': '2026-04-23T06:37:45.875095+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'thời gian nghỉ phép là bao lâu và được tính như thế nào?'}
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'UserMessage', 'uid': '909dc472-e045-4d8c-b881-4a5781d23c7b', 'event_created_at': '2026-04-23T06:37:45.875095+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'thời gian nghỉ phép là bao lâu và được tính như thế nào?'}
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': 'ffecd2fb-da88-49d9-b7b4-c523238c002a', 'event_created_at': '2026-04-23T06:37:45.875413+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_user_intent', 'action_params': {}, 'action_result_key': None, 'action_uid': '2316e75f-b9ff-460a-949c-300dc01fc5bb', 'is_system_action': True}
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': 'ffecd2fb-da88-49d9-b7b4-c523238c002a', 'event_created_at': '2026-04-23T06:37:45.875413+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_user_intent', 'action_params': {}, 'action_result_key': None, 'action_uid': '2316e75f-b9ff-460a-949c-300dc01fc5bb', 'is_system_action': True}
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: generate_user_intent
+2026-04-23 13:37:45,875 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: generate_user_intent
+2026-04-23 13:37:46,799 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:46,903 [INFO] nemoguardrails.actions.llm.generation: Phase 1 :: Generating user intent
+2026-04-23 13:37:47,234 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:47,522 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:47,528 [INFO] nemoguardrails.logging.callbacks: Invocation Params :: {'model': 'gpt-4o-mini', 'model_name': 'gpt-4o-mini', 'stream': False, 'temperature': 0.001, '_type': 'openai-chat', 'stop': None}
+2026-04-23 13:37:47,528 [INFO] nemoguardrails.logging.callbacks: Prompt Messages :: 
+[cyan]System[/]
+Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.
+Nếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."
+Nếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.
+
+[cyan]System[/]
+This is how a conversation between a user and the bot can go:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+Tell me a bit about the history of NVIDIA.
+[cyan]Bot[/]
+User intent: ask general question
+Bot intent: response for general question
+Bot message: "NVIDIA is a technology company that specializes in designing and manufacturing graphics processing units (GPUs) and other computer hardware. The company was founded in 1993 by Jen-Hsun Huang, Chris Malachowsky, and Curtis Priem."
+[cyan]User[/]
+tell me more
+[cyan]Bot[/]
+User intent: request more information
+Bot intent: provide more information
+Bot message: "Initially, the company focused on developing 3D graphics processing technology for the PC gaming market. In 1999, NVIDIA released the GeForce 256, the world's first GPU, which was a major breakthrough for the gaming industry. The company continued to innovate in the GPU space, releasing new products and expanding into other markets such as professional graphics, mobile devices, and artificial intelligence."
+[cyan]User[/]
+thanks
+[cyan]Bot[/]
+User intent: express appreciation
+Bot intent: express appreciation and offer additional help
+Bot message: "You're welcome. If you have any more questions or if there's anything else I can help you with, please don't hesitate to ask."
+[cyan]System[/]
+This is how the user talks:
+[cyan]User[/]
+Công thức nấu cơm
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]User[/]
+Hướng dẫn chơi game
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]User[/]
+Bạn có biết hát không?
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]User[/]
+Làm sao để làm giàu
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]User[/]
+Thời tiết hôm nay thế nào?
+[cyan]Bot[/]
+User intent: ask off topic
+[cyan]System[/]
+This is the current conversation between the user and the bot:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+thời gian nghỉ phép là bao lâu và được tính như thế nào?
+2026-04-23 13:37:50,473 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:37:50,478 [INFO] nemoguardrails.logging.callbacks: Completion :: User intent: ask about company policy
+Bot intent: provide information about company policy
+Bot message: "Thời gian nghỉ phép và cách tính thường được quy định trong chính sách nhân sự của công ty. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về quy định cụ thể."
+2026-04-23 13:37:50,479 [INFO] nemoguardrails.logging.callbacks: Output Stats :: {'token_usage': {'completion_tokens': 71, 'prompt_tokens': 754, 'total_tokens': 825, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_a7190374f3', 'id': 'chatcmpl-DXhz2L3XtYHlU3lsHuefuYE5rzslZ', 'service_tier': 'default'}
+2026-04-23 13:37:50,479 [INFO] nemoguardrails.logging.callbacks: --- :: LLM call took 2.95 seconds
+2026-04-23 13:37:50,479 [INFO] nemoguardrails.actions.llm.generation: Canonical form for user intent: ask about company policy
+2026-04-23 13:37:50,479 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': 'fd683f90-56e4-4d09-b949-6b573e10aec3', 'event_created_at': '2026-04-23T06:37:50.479787+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '2316e75f-b9ff-460a-949c-300dc01fc5bb', 'action_name': 'generate_user_intent', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'UserIntent', 'uid': '45a53697-f5c3-4ca6-803a-12d72a51f94e', 'event_created_at': '2026-04-23T06:37:50.479751+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'ask about company policy'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:37:50.479794+00:00'}
+2026-04-23 13:37:50,479 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: UserIntent {'uid': '45a53697-f5c3-4ca6-803a-12d72a51f94e', 'event_created_at': '2026-04-23T06:37:50.479751+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'ask about company policy'}
+2026-04-23 13:37:50,479 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'UserIntent', 'uid': '45a53697-f5c3-4ca6-803a-12d72a51f94e', 'event_created_at': '2026-04-23T06:37:50.479751+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'ask about company policy'}
+2026-04-23 13:37:50,480 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': 'ec162cb6-d657-41b2-8786-04f111ebeaa5', 'event_created_at': '2026-04-23T06:37:50.480202+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_next_steps', 'action_params': {}, 'action_result_key': None, 'action_uid': '9a3d32c7-7a3d-457f-b4f2-4036c1433693', 'is_system_action': True}
+2026-04-23 13:37:50,480 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': 'ec162cb6-d657-41b2-8786-04f111ebeaa5', 'event_created_at': '2026-04-23T06:37:50.480202+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_next_steps', 'action_params': {}, 'action_result_key': None, 'action_uid': '9a3d32c7-7a3d-457f-b4f2-4036c1433693', 'is_system_action': True}
+2026-04-23 13:37:50,480 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: generate_next_steps
+2026-04-23 13:37:50,480 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: generate_next_steps
+2026-04-23 13:37:50,480 [INFO] nemoguardrails.actions.llm.generation: Phase 2 :: Generating next step ...
+2026-04-23 13:37:50,982 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:51,158 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:51,162 [INFO] nemoguardrails.logging.callbacks: Invocation Params :: {'model': 'gpt-4o-mini', 'model_name': 'gpt-4o-mini', 'stream': False, 'temperature': 0.001, '_type': 'openai-chat', 'stop': None}
+2026-04-23 13:37:51,162 [INFO] nemoguardrails.logging.callbacks: Prompt Messages :: 
+[cyan]System[/]
+Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.
+Nếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."
+Nếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.
+
+[cyan]System[/]
+This is how a conversation between a user and the bot can go:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+Tell me a bit about the history of NVIDIA.
+[cyan]Bot[/]
+User intent: ask general question
+Bot intent: response for general question
+Bot message: "NVIDIA is a technology company that specializes in designing and manufacturing graphics processing units (GPUs) and other computer hardware. The company was founded in 1993 by Jen-Hsun Huang, Chris Malachowsky, and Curtis Priem."
+[cyan]User[/]
+tell me more
+[cyan]Bot[/]
+User intent: request more information
+Bot intent: provide more information
+Bot message: "Initially, the company focused on developing 3D graphics processing technology for the PC gaming market. In 1999, NVIDIA released the GeForce 256, the world's first GPU, which was a major breakthrough for the gaming industry. The company continued to innovate in the GPU space, releasing new products and expanding into other markets such as professional graphics, mobile devices, and artificial intelligence."
+[cyan]User[/]
+thanks
+[cyan]Bot[/]
+User intent: express appreciation
+Bot intent: express appreciation and offer additional help
+Bot message: "You're welcome. If you have any more questions or if there's anything else I can help you with, please don't hesitate to ask."
+[cyan]System[/]
+This is how the bot thinks:
+[cyan]Bot[/]
+User intent: ask off topic
+Bot intent: refuse to respond off topic
+[cyan]System[/]
+This is the current conversation between the user and the bot:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+thời gian nghỉ phép là bao lâu và được tính như thế nào?
+[cyan]Bot[/]
+User intent: ask about company policy
+2026-04-23 13:37:52,726 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.logging.callbacks: Completion :: Bot intent: provide information about company policy
+Bot message: "Thời gian nghỉ phép và cách tính thường phụ thuộc vào chính sách của công ty. Bạn có thể tham khảo quy định trong sổ tay nhân viên hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép và cách tính cụ thể."
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.logging.callbacks: Output Stats :: {'token_usage': {'completion_tokens': 69, 'prompt_tokens': 681, 'total_tokens': 750, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_a7190374f3', 'id': 'chatcmpl-DXhz5hUs4GjnL4lk8mhrLU5rPqMxu', 'service_tier': 'default'}
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.logging.callbacks: --- :: LLM call took 1.57 seconds
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': 'b60db707-f947-4e52-8432-742cd29fc16e', 'event_created_at': '2026-04-23T06:37:52.728341+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '9a3d32c7-7a3d-457f-b4f2-4036c1433693', 'action_name': 'generate_next_steps', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'BotIntent', 'uid': '3005e50a-2707-493a-889d-5aae38349a8f', 'event_created_at': '2026-04-23T06:37:52.728307+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'provide information about company policy'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:37:52.728348+00:00'}
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: BotIntent {'uid': '3005e50a-2707-493a-889d-5aae38349a8f', 'event_created_at': '2026-04-23T06:37:52.728307+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'provide information about company policy'}
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'BotIntent', 'uid': '3005e50a-2707-493a-889d-5aae38349a8f', 'event_created_at': '2026-04-23T06:37:52.728307+00:00', 'source_uid': 'NeMoGuardrails', 'intent': 'provide information about company policy'}
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': '0d94f832-54c0-4762-9189-773b173fc521', 'event_created_at': '2026-04-23T06:37:52.728807+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'retrieve_relevant_chunks', 'action_params': {}, 'action_result_key': None, 'action_uid': 'f5993835-498a-40fc-a01b-7b3746b22583', 'is_system_action': True}
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': '0d94f832-54c0-4762-9189-773b173fc521', 'event_created_at': '2026-04-23T06:37:52.728807+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'retrieve_relevant_chunks', 'action_params': {}, 'action_result_key': None, 'action_uid': 'f5993835-498a-40fc-a01b-7b3746b22583', 'is_system_action': True}
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: retrieve_relevant_chunks
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: retrieve_relevant_chunks
+2026-04-23 13:37:52,728 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: ContextUpdate {'uid': '1f6ade1a-e142-4935-af37-ff9f05fb6122', 'event_created_at': '2026-04-23T06:37:52.728967+00:00', 'source_uid': 'NeMoGuardrails', 'data': {'relevant_chunks': '\n', 'relevant_chunks_sep': [], 'retrieved_for': None}}
+2026-04-23 13:37:52,729 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': 'f6830605-335d-42d6-8119-a1046163829c', 'event_created_at': '2026-04-23T06:37:52.728977+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': 'f5993835-498a-40fc-a01b-7b3746b22583', 'action_name': 'retrieve_relevant_chunks', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': '\n', 'events': None, 'is_system_action': True, 'action_finished_at': '2026-04-23T06:37:52.728981+00:00'}
+2026-04-23 13:37:52,729 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'InternalSystemActionFinished', 'uid': 'f6830605-335d-42d6-8119-a1046163829c', 'event_created_at': '2026-04-23T06:37:52.728977+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': 'f5993835-498a-40fc-a01b-7b3746b22583', 'action_name': 'retrieve_relevant_chunks', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': '\n', 'events': None, 'is_system_action': True, 'action_finished_at': '2026-04-23T06:37:52.728981+00:00'}
+2026-04-23 13:37:52,729 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': '31974237-d68a-4c41-8faa-b9316463e320', 'event_created_at': '2026-04-23T06:37:52.729386+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_bot_message', 'action_params': {}, 'action_result_key': None, 'action_uid': '33044ef0-cf41-4323-b6d8-a23513c3a552', 'is_system_action': True}
+2026-04-23 13:37:52,729 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': '31974237-d68a-4c41-8faa-b9316463e320', 'event_created_at': '2026-04-23T06:37:52.729386+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'generate_bot_message', 'action_params': {}, 'action_result_key': None, 'action_uid': '33044ef0-cf41-4323-b6d8-a23513c3a552', 'is_system_action': True}
+2026-04-23 13:37:52,729 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: generate_bot_message
+2026-04-23 13:37:52,729 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: generate_bot_message
+2026-04-23 13:37:52,729 [INFO] nemoguardrails.actions.llm.generation: Phase 3 :: Generating bot message ...
+2026-04-23 13:37:53,502 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:53,953 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:53,958 [INFO] nemoguardrails.logging.callbacks: Invocation Params :: {'model': 'gpt-4o-mini', 'model_name': 'gpt-4o-mini', 'stream': False, 'temperature': 0.0, '_type': 'openai-chat', 'stop': None}
+2026-04-23 13:37:53,958 [INFO] nemoguardrails.logging.callbacks: Prompt Messages :: 
+[cyan]System[/]
+Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.
+Nếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."
+Nếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.
+
+[cyan]System[/]
+This is how a conversation between a user and the bot can go:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+Tell me a bit about the history of NVIDIA.
+[cyan]Bot[/]
+User intent: ask general question
+Bot intent: response for general question
+Bot message: "NVIDIA is a technology company that specializes in designing and manufacturing graphics processing units (GPUs) and other computer hardware. The company was founded in 1993 by Jen-Hsun Huang, Chris Malachowsky, and Curtis Priem."
+[cyan]User[/]
+tell me more
+[cyan]Bot[/]
+User intent: request more information
+Bot intent: provide more information
+Bot message: "Initially, the company focused on developing 3D graphics processing technology for the PC gaming market. In 1999, NVIDIA released the GeForce 256, the world's first GPU, which was a major breakthrough for the gaming industry. The company continued to innovate in the GPU space, releasing new products and expanding into other markets such as professional graphics, mobile devices, and artificial intelligence."
+[cyan]User[/]
+thanks
+[cyan]Bot[/]
+User intent: express appreciation
+Bot intent: express appreciation and offer additional help
+Bot message: "You're welcome. If you have any more questions or if there's anything else I can help you with, please don't hesitate to ask."
+[cyan]System[/]
+"
+[cyan]System[/]
+This is how the bot talks:
+[cyan]Bot[/]
+Bot intent: inform cannot engage in self harm behavior
+Bot message: "I will not engage in any self harm behavior."
+[cyan]Bot[/]
+Bot intent: inform answer unknown
+Bot message: "I don't know the answer to that."
+[cyan]Bot[/]
+Bot intent: inform cannot engage with inappropriate content
+Bot message: "I will not engage with inappropriate content."
+[cyan]Bot[/]
+Bot intent: inform cannot engage in abusive or harmful behavior
+Bot message: "I will not engage in any abusive or harmful behavior."
+[cyan]Bot[/]
+Bot intent: inform cannot engage with sensitive content
+Bot message: "I will not engage with sensitive content."
+[cyan]System[/]
+This is the current conversation between the user and the bot:
+[cyan]User[/]
+Hello there!
+[cyan]Bot[/]
+User intent: express greeting
+Bot intent: express greeting
+Bot message: "Hello! How can I assist you today?"
+[cyan]User[/]
+What can you do for me?
+[cyan]Bot[/]
+User intent: ask about capabilities
+Bot intent: respond about capabilities
+Bot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."
+[cyan]User[/]
+thời gian nghỉ phép là bao lâu và được tính như thế nào?
+[cyan]Bot[/]
+User intent: ask about company policy
+Bot intent: provide information about company policy
+2026-04-23 13:37:56,103 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:37:56,105 [INFO] nemoguardrails.logging.callbacks: Completion :: "Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan."
+2026-04-23 13:37:56,105 [INFO] nemoguardrails.logging.callbacks: Output Stats :: {'token_usage': {'completion_tokens': 60, 'prompt_tokens': 811, 'total_tokens': 871, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_provider': 'openai', 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_a7190374f3', 'id': 'chatcmpl-DXhz8IghZcQEu6S2D43y9JZpOnl8t', 'service_tier': 'default'}
+2026-04-23 13:37:56,105 [INFO] nemoguardrails.logging.callbacks: --- :: LLM call took 2.15 seconds
+2026-04-23 13:37:56,105 [INFO] nemoguardrails.actions.llm.generation: --- :: LLM Bot Message Generation call took 2.15 seconds
+2026-04-23 13:37:56,105 [INFO] nemoguardrails.actions.llm.generation: Generated bot message: Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan.
+2026-04-23 13:37:56,105 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: ContextUpdate {'uid': '2096e32e-9c6f-4b04-a2c0-56c5646abafd', 'event_created_at': '2026-04-23T06:37:56.105888+00:00', 'source_uid': 'NeMoGuardrails', 'data': {'_last_bot_prompt': [{'type': 'system', 'content': 'Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.\nNếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."\nNếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.\n'}, {'type': 'system', 'content': 'This is how a conversation between a user and the bot can go:'}, {'type': 'user', 'content': 'Hello there!'}, {'type': 'assistant', 'content': 'User intent: express greeting\nBot intent: express greeting\nBot message: "Hello! How can I assist you today?"'}, {'type': 'user', 'content': 'What can you do for me?'}, {'type': 'assistant', 'content': 'User intent: ask about capabilities\nBot intent: respond about capabilities\nBot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."'}, {'type': 'user', 'content': 'Tell me a bit about the history of NVIDIA.'}, {'type': 'assistant', 'content': 'User intent: ask general question\nBot intent: response for general question\nBot message: "NVIDIA is a technology company that specializes in designing and manufacturing graphics processing units (GPUs) and other computer hardware. The company was founded in 1993 by Jen-Hsun Huang, Chris Malachowsky, and Curtis Priem."'}, {'type': 'user', 'content': 'tell me more'}, {'type': 'assistant', 'content': 'User intent: request more information\nBot intent: provide more information\nBot message: "Initially, the company focused on developing 3D graphics processing technology for the PC gaming market. In 1999, NVIDIA released the GeForce 256, the world\'s first GPU, which was a major breakthrough for the gaming industry. The company continued to innovate in the GPU space, releasing new products and expanding into other markets such as professional graphics, mobile devices, and artificial intelligence."'}, {'type': 'user', 'content': 'thanks'}, {'type': 'assistant', 'content': 'User intent: express appreciation\nBot intent: express appreciation and offer additional help\nBot message: "You\'re welcome. If you have any more questions or if there\'s anything else I can help you with, please don\'t hesitate to ask."'}, {'type': 'system', 'content': '"'}, {'type': 'system', 'content': 'This is how the bot talks:'}, {'type': 'assistant', 'content': 'Bot intent: inform cannot engage in self harm behavior\nBot message: "I will not engage in any self harm behavior."'}, {'type': 'assistant', 'content': 'Bot intent: inform answer unknown\nBot message: "I don\'t know the answer to that."'}, {'type': 'assistant', 'content': 'Bot intent: inform cannot engage with inappropriate content\nBot message: "I will not engage with inappropriate content."'}, {'type': 'assistant', 'content': 'Bot intent: inform cannot engage in abusive or harmful behavior\nBot message: "I will not engage in any abusive or harmful behavior."'}, {'type': 'assistant', 'content': 'Bot intent: inform cannot engage with sensitive content\nBot message: "I will not engage with sensitive content."'}, {'type': 'system', 'content': 'This is the current conversation between the user and the bot:'}, {'type': 'user', 'content': 'Hello there!'}, {'type': 'assistant', 'content': 'User intent: express greeting\nBot intent: express greeting\nBot message: "Hello! How can I assist you today?"'}, {'type': 'user', 'content': 'What can you do for me?'}, {'type': 'bot', 'content': 'User intent: ask about capabilities\nBot intent: respond about capabilities\nBot message: "As an AI assistant, I can help you with a wide range of tasks. This includes question answering on various topics, generating text for various purposes and providing suggestions based on your preferences."'}, {'type': 'user', 'content': 'thời gian nghỉ phép là bao lâu và được tính như thế nào?'}, {'type': 'assistant', 'content': 'User intent: ask about company policy\nBot intent: provide information about company policy'}]}}
+2026-04-23 13:37:56,105 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': '962bbb7e-7223-4e9c-871d-974511009503', 'event_created_at': '2026-04-23T06:37:56.105897+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': '33044ef0-cf41-4323-b6d8-a23513c3a552', 'action_name': 'generate_bot_message', 'action_params': {}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'BotMessage', 'uid': 'a878f56b-2cb2-4f59-90f4-03e9894a27b7', 'event_created_at': '2026-04-23T06:37:56.105861+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan.'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:37:56.105903+00:00'}
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: BotMessage {'uid': 'a878f56b-2cb2-4f59-90f4-03e9894a27b7', 'event_created_at': '2026-04-23T06:37:56.105861+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan.'}
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'BotMessage', 'uid': 'a878f56b-2cb2-4f59-90f4-03e9894a27b7', 'event_created_at': '2026-04-23T06:37:56.105861+00:00', 'source_uid': 'NeMoGuardrails', 'text': 'Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan.'}
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: ContextUpdate {'uid': '4ab1a74d-ceff-435d-8cd0-10c28c05de9d', 'event_created_at': '2026-04-23T06:37:56.106566+00:00', 'source_uid': 'NeMoGuardrails', 'data': {'bot_message': 'Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan.'}}
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartInternalSystemAction {'uid': 'c9b2708b-8fee-49b5-9768-8c9e1fb417f1', 'event_created_at': '2026-04-23T06:37:56.106580+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'StartUtteranceBotAction', 'script': '$bot_message'}}, 'action_result_key': None, 'action_uid': 'f4c5660f-0404-40ac-967c-280d594f8bbb', 'is_system_action': True}
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartInternalSystemAction', 'uid': 'c9b2708b-8fee-49b5-9768-8c9e1fb417f1', 'event_created_at': '2026-04-23T06:37:56.106580+00:00', 'source_uid': 'NeMoGuardrails', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'StartUtteranceBotAction', 'script': '$bot_message'}}, 'action_result_key': None, 'action_uid': 'f4c5660f-0404-40ac-967c-280d594f8bbb', 'is_system_action': True}
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Executing action :: create_event
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.actions.action_dispatcher: Executing registered action: create_event
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: InternalSystemActionFinished {'uid': 'd2d11a9a-dbbc-4bdf-b831-18e0c949abdc', 'event_created_at': '2026-04-23T06:37:56.106778+00:00', 'source_uid': 'NeMoGuardrails', 'action_uid': 'f4c5660f-0404-40ac-967c-280d594f8bbb', 'action_name': 'create_event', 'action_params': {'event': {'_type': 'StartUtteranceBotAction', 'script': '$bot_message'}}, 'action_result_key': None, 'status': 'success', 'is_success': True, 'return_value': None, 'events': [{'type': 'StartUtteranceBotAction', 'uid': 'ae80d0a6-9cee-46ec-91a6-696123fd73eb', 'event_created_at': '2026-04-23T06:37:56.106757+00:00', 'source_uid': 'NeMoGuardrails', 'script': 'Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan.', 'action_info_modality': 'bot_speech', 'action_info_modality_policy': 'replace', 'action_uid': 'b74916c8-b6ff-4952-9c93-3524302d4d4a'}], 'is_system_action': True, 'action_finished_at': '2026-04-23T06:37:56.106782+00:00'}
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: StartUtteranceBotAction {'uid': 'ae80d0a6-9cee-46ec-91a6-696123fd73eb', 'event_created_at': '2026-04-23T06:37:56.106757+00:00', 'source_uid': 'NeMoGuardrails', 'script': 'Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan.', 'action_info_modality': 'bot_speech', 'action_info_modality_policy': 'replace', 'action_uid': 'b74916c8-b6ff-4952-9c93-3524302d4d4a'}
+2026-04-23 13:37:56,106 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Processing event: {'type': 'StartUtteranceBotAction', 'uid': 'ae80d0a6-9cee-46ec-91a6-696123fd73eb', 'event_created_at': '2026-04-23T06:37:56.106757+00:00', 'source_uid': 'NeMoGuardrails', 'script': 'Thời gian nghỉ phép và cách tính của công ty thường được quy định trong chính sách nhân sự. Bạn có thể tham khảo tài liệu nội bộ hoặc liên hệ với bộ phận nhân sự để biết thêm chi tiết về thời gian nghỉ phép, cách tính và các quy định liên quan.', 'action_info_modality': 'bot_speech', 'action_info_modality_policy': 'replace', 'action_uid': 'b74916c8-b6ff-4952-9c93-3524302d4d4a'}
+2026-04-23 13:37:56,107 [INFO] nemoguardrails.colang.v1_0.runtime.runtime: Event :: Listen {'uid': '35f69eda-d0be-4fd7-8ea1-1f1ea28da8b6', 'event_created_at': '2026-04-23T06:37:56.107286+00:00', 'source_uid': 'NeMoGuardrails'}
+2026-04-23 13:37:56,107 [INFO] nemoguardrails.rails.llm.llmrails: --- :: Total processing took 10.23 seconds. Stats: 3 total calls, 6.66 total time, 2446 total tokens, 2246 total prompt tokens, 200 total completion tokens, [2.95, 1.57, 2.15] as latencies
+2026-04-23 13:37:56,107 [INFO] src.backend.rag.graph:  > Calling LLM for intent classification...
+2026-04-23 13:37:56,926 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:37:56,930 [INFO] src.backend.rag.graph:  > Intent: policy
+2026-04-23 13:37:56,931 [INFO] src.backend.rag.graph: ---NODE: REWRITE QUERY---
+2026-04-23 13:37:58,234 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:37:58,239 [INFO] src.backend.rag.graph:  > Rewritten query (1): Thời gian nghỉ phép là bao lâu và cách tính như thế nào?
+2026-04-23 13:37:58,240 [INFO] src.backend.rag.graph: ---NODE: RETRIEVER---
+2026-04-23 13:37:58,267 [INFO] src.backend.rag.chroma_store: ChromaDB ready — collection='hr_documents', path='/home/lam/code/A20-App-090/src/backend/rag/chroma_db', docs_stored=8
+2026-04-23 13:37:58,767 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:37:58,771 [INFO] src.backend.rag.chroma_store: Search 'Thời gian nghỉ phép là bao lâu và cách tính như thế nào?' → 3 results (top score: 0.6376)
+2026-04-23 13:37:58,771 [INFO] src.backend.rag.graph:  > Found 3 documents for: Thời gian nghỉ phép là bao lâu và cách tính như thế nào?
+2026-04-23 13:37:58,771 [INFO] src.backend.rag.graph: ---NODE: DOC GRADER---
+2026-04-23 13:37:59,481 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:37:59,688 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:38:01,327 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:38:01,331 [INFO] src.backend.rag.graph:  > 1 relevant documents.
+2026-04-23 13:38:01,334 [INFO] src.backend.rag.graph: ---NODE: GENERATOR---
+2026-04-23 13:38:04,195 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-23 13:38:04,709 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:38:04,731 [INFO] src.backend.rag.faq_cache: 📥 FAQ cache STORE: 'Thời gian nghỉ phép là bao lâu và được tính như thế nào?'
+2026-04-23 13:38:04,732 [INFO] src.backend.api.chat: Chatbot Graph execution took 20.0945s
+2026-04-23 13:38:05,012 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_messages "HTTP/2 201 Created"
+2026-04-23 13:38:05,216 [INFO] httpx: HTTP Request: PATCH https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_conversations?id=eq.da07a461-3fad-4966-917f-5db7ada7c556 "HTTP/2 200 OK"
+INFO:     127.0.0.1:34292 - "POST /api/chat HTTP/1.1" 201 Created
+WARNING:  WatchFiles detected changes in 'src/backend/api/chat.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-04-23 13:38:25,055 [INFO] src.backend.main: 👋 AI Onboarding Backend shutting down...
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15562]
+INFO:     Started server process [15825]
+INFO:     Waiting for application startup.
+2026-04-23 13:38:29,737 [INFO] src.backend.main: 🚀 AI Onboarding Backend starting...
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/backend/rag/graph.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-04-23 13:38:44,167 [INFO] src.backend.main: 👋 AI Onboarding Backend shutting down...
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15825]
+INFO:     Started server process [15864]
+INFO:     Waiting for application startup.
+2026-04-23 13:38:48,047 [INFO] src.backend.main: 🚀 AI Onboarding Backend starting...
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/backend/rag/graph.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-04-23 13:38:53,260 [INFO] src.backend.main: 👋 AI Onboarding Backend shutting down...
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15864]
+INFO:     Started server process [15906]
+INFO:     Waiting for application startup.
+2026-04-23 13:38:57,505 [INFO] src.backend.main: 🚀 AI Onboarding Backend starting...
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'test_chatbot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-04-23 13:39:01,915 [INFO] src.backend.main: 👋 AI Onboarding Backend shutting down...
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15906]
+INFO:     Started server process [16007]
+INFO:     Waiting for application startup.
+2026-04-23 13:39:12,335 [INFO] src.backend.main: 🚀 AI Onboarding Backend starting...
+INFO:     Application startup complete.
+2026-04-23 13:39:12,804 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/auth/v1/token?grant_type=password "HTTP/2 200 OK"
+2026-04-23 13:39:13,213 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cemail%2Cfull_name%2Cvai_tro%2Cdepartment%2Cemployee_code%2Conboarding_status&email=eq.test%40company.com&limit=1 "HTTP/2 200 OK"
+
+============================================================
+DEBUG LOGIN: email='test@company.com', password_len=6
+============================================================
+DEBUG: Email input: 'test@company.com'
+DEBUG: Domain extracted: 'company.com'
+DEBUG: ALLOWED_EMAIL_DOMAINS: ['company.com']
+DEBUG: Allowed (after strip/lower): ['company.com']
+DEBUG: Domain 'company.com' in allowed = True
+DEBUG: Calling Supabase sign_in_with_password...
+DEBUG: Supabase auth SUCCESS - user=test@company.com
+DEBUG: get_employee_by_email: 'test@company.com'
+DEBUG: Employees query result: [{'id': '25565079-a776-4f2c-9872-bb5422f1fdb8', 'email': 'test@company.com', 'full_name': 'Nguyễn Văn Test', 'vai_tro': 'nhan_vien_moi', 'department': 'Engineering', 'employee_code': 'NV001', 'onboarding_status': 'in_progress'}]
+DEBUG: Employee found: name='Nguyễn Văn Test', vai_tro='nhan_vien_moi', dept='Engineering', status='in_progress'
+INFO:     127.0.0.1:59124 - "POST /api/auth/login HTTP/1.1" 200 OK
+2026-04-23 13:39:13,418 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/auth/v1/user "HTTP/2 200 OK"
+2026-04-23 13:39:13,727 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cemail%2Cfull_name%2Cvai_tro%2Cdepartment%2Cemployee_code&email=eq.test%40company.com&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:39:13,930 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/employees?select=id%2Cfull_name%2Crole%2Cdepartment&id=eq.25565079-a776-4f2c-9872-bb5422f1fdb8&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:39:14,135 [INFO] httpx: HTTP Request: GET https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_conversations?select=id%2Cmessage_count&employee_id=eq.25565079-a776-4f2c-9872-bb5422f1fdb8&ended_at=is.null&limit=1 "HTTP/2 200 OK"
+2026-04-23 13:39:14,340 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_messages "HTTP/2 201 Created"
+2026-04-23 13:39:14,345 [INFO] src.backend.rag.graph: ---NODE: NORMALIZE INPUT---
+2026-04-23 13:39:14,345 [INFO] src.backend.rag.graph:  > Normalize took 0.0001s
+2026-04-23 13:39:14,346 [INFO] src.backend.rag.graph: ---NODE: FAQ CACHE CHECK---
+2026-04-23 13:39:15,162 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2026-04-23 13:39:15,169 [INFO] src.backend.rag.faq_cache: ✅ FAQ cache HIT (score=0.9803): 'Thời gian nghỉ phép là bao lâu và được tính như thế nào?'
+2026-04-23 13:39:15,169 [INFO] src.backend.rag.graph:  > Cache HIT — skipping full pipeline (took 0.8227s).
+2026-04-23 13:39:15,169 [INFO] src.backend.api.chat: Chatbot Graph execution took 0.8288s
+2026-04-23 13:39:15,395 [INFO] httpx: HTTP Request: POST https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_messages "HTTP/2 201 Created"
+2026-04-23 13:39:15,584 [INFO] httpx: HTTP Request: PATCH https://wpvgshcuekcnbjgfssca.supabase.co/rest/v1/chatbot_conversations?id=eq.da07a461-3fad-4966-917f-5db7ada7c556 "HTTP/2 200 OK"
+INFO:     127.0.0.1:55614 - "POST /api/chat HTTP/1.1" 201 Created
+2026-04-23 13:40:43,726 [ERROR] src.backend.api.auth: Supabase auth error: [Errno -3] Temporary failure in name resolution
+
+============================================================
+DEBUG LOGIN: email='test@company.com', password_len=6
+============================================================
+DEBUG: Email input: 'test@company.com'
+DEBUG: Domain extracted: 'company.com'
+DEBUG: ALLOWED_EMAIL_DOMAINS: ['company.com']
+DEBUG: Allowed (after strip/lower): ['company.com']
+DEBUG: Domain 'company.com' in allowed = True
+DEBUG: Calling Supabase sign_in_with_password...
+DEBUG: Supabase auth EXCEPTION: type=ConnectError, msg=[Errno -3] Temporary failure in name resolution
+INFO:     127.0.0.1:40354 - "POST /api/auth/login HTTP/1.1" 500 Internal Server Error
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-04-23 13:41:12,960 [INFO] src.backend.main: 👋 AI Onboarding Backend shutting down...
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16007]
+INFO:     Stopping reloader process [15221]

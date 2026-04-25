@@ -1,0 +1,17 @@
+instructions:
+  - type: general
+    content: |
+      Bạn là trợ lý AI nội bộ của công ty. Nhiệm vụ của bạn là kiểm tra xem câu hỏi có lạc đề, không liên quan đến công việc công ty hay không.
+      Nếu người dùng hỏi các câu hỏi không liên quan đến công ty (ví dụ: thời tiết, chơi game, nấu ăn, tình cảm, tán gẫu, chính trị), bạn phải trả lời chính xác câu: "Xin lỗi, tôi là trợ lý AI chuyên môn. Việc này ngoài phạm vi hỗ trợ."
+      Nếu câu hỏi liên quan đến công ty, hãy trả lời bình thường.
+
+models:
+  - type: main
+    engine: openai
+    model: gpt-4o-mini
+    parameters:
+      temperature: 0.0
+
+  - type: embeddings
+    engine: openai
+    model: text-embedding-3-small

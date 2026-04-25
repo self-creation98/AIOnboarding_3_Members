@@ -1,0 +1,42 @@
+[Waterfall] Logging in...
+[Waterfall] Sending query: 'Nhân viên nữ được nghỉ thai sản trong bao lâu?'
+
+=== CHATBOT CALL WATERFALL ===
+Node Name            | Duration   | Timeline
+------------------------------------------------------------
+normalize_input      |   0.0000s | █
+faq_cache_check      |   0.6219s | █
+llm_router           |  12.1813s |  ███████████████████████
+rewrite_query        |   1.1220s |                          ██
+rewrite_query_2      |   1.0159s |                               █
+retriever            |   0.2280s |                                 █
+doc_grader           |   1.0300s |                                 ██
+generator            |   2.5506s |                                   █████
+------------------------------------------------------------
+Total Graph Execution: 20.3797s
+
+Total API Latency (incl. network/overhead): 22.0154s
+[Waterfall] Logging in...
+[Waterfall] Sending query: 'Nhân viên nữ được nghỉ thai sản trong bao lâu?'
+
+=== CHATBOT CALL WATERFALL ===
+Node Name            | Duration   | Timeline
+------------------------------------------------------------
+normalize_input      |   0.0001s | █
+faq_cache_check      |   0.5081s | ███████████████████████████████████████
+------------------------------------------------------------
+Total Graph Execution: 0.5084s
+
+Total API Latency (incl. network/overhead): 1.9604s
+[Waterfall] Logging in...
+[Waterfall] Sending query: 'Nghỉ thai sản là gì?'
+
+=== CHATBOT CALL WATERFALL ===
+Node Name            | Duration   | Timeline
+------------------------------------------------------------
+normalize_input      |   0.0002s | █
+faq_cache_check      |   0.4368s | ███████████████████████████████████████
+------------------------------------------------------------
+Total Graph Execution: 0.4373s
+
+Total API Latency (incl. network/overhead): 1.9791s
