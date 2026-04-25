@@ -20,11 +20,7 @@ langchain-openai
 # RAG — Vector Store
 chromadb>=0.5.0
 
-# Guardrails
-nemoguardrails
-
-# UI / Utilities
-streamlit
-
-# ML
+# ML — CPU only (slim, no CUDA)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch --index-url https://download.pytorch.org/whl/cpu
 sentence-transformers
